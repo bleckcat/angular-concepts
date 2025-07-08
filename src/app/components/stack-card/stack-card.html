@@ -1,0 +1,9 @@
+@if (cardData) {
+<div class="stack-card" [style.backgroundColor]="cardData.color">
+  <img [src]="cardData.image" alt="{{ cardData.name }} logo" />
+  <h3>{{ cardData.name }}</h3>
+  <p>Status: {{ cardData.status }}</p>
+</div>
+} @else {
+<p>No card data available</p>
+}

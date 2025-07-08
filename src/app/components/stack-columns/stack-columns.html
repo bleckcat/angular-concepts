@@ -1,0 +1,5 @@
+@for (card of cards; track card.name; let i = $index) {
+<stack-card [cardData]="card"></stack-card>
+} @empty {
+<p>No cards available</p>
+}
