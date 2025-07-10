@@ -1,9 +1,66 @@
-@if (cardData) {
-<div class="stack-card" [style.backgroundColor]="cardData.color">
-  <img [src]="cardData.image" alt="{{ cardData.name }} logo" />
-  <h3>{{ cardData.name }}</h3>
-  <p>Status: {{ cardData.status }}</p>
+<div
+  class="border border-gray-200 rounded-lg shadow-md bg-white cursor-pointer hover:shadow-lg transition-shadow duration-200"
+>
+  <div
+    class="w-full rounded-t-lg min-h-[48px] cursor-grab"
+    [style.backgroundColor]="cardData().color"
+  >
+    <img
+      [src]="cardData().image"
+      alt="{{ cardData().name }} logo"
+      class="max-w-[64px] max-h-[48px] object-contain min-h-[48px] m-auto mb-2"
+    />
+  </div>
+  <div class="p-2">
+    <h3>{{ cardData().name }}</h3>
+    <p>Status: {{ cardData().status }}</p>
+    <button
+      class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      (click)="switchEditCardModal()"
+    >
+      Edit card button
+    </button>
+  </div>
+  <dialog
+    [open]="isEditModalOpen()"
+    class="p-4 bg-white rounded-lg shadow-xl min-h-[200px] min-w-[300px] cursor-default right-auto left-auto top-1/2 translate-y-[-50%] fixed z-50 border border-gray-100"
+  >
+    <form [formGroup]="editCard" (ngSubmit)="onSubmitEditCard($event)">
+      <h2>Edit Card</h2>
+      <button
+        class="absolute top-2 right-2 text-gray-500 bg-rose-600 rounded-full w-6 h-6 flex items-center justify-center text-white"
+        (click)="switchEditCardModal()"
+      >
+        X
+      </button>
+      <div class="flex flex-col gap-2 mb-4">
+        <label for="card-name">Name</label>
+        <input
+          id="card-name"
+          type="text"
+          formControlName="name"
+          class="w-full h-[36px] border border-gray-200 rounded-lg px-2"
+        />
+        <label for="card-status">Status</label>
+        <input
+          id="card-status"
+          type="text"
+          formControlName="status"
+          class="w-full h-[36px] border border-gray-200 rounded-lg px-2"
+        />
+      </div>
+      <button
+        type="submit"
+        class="m-auto px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+      >
+        Edit card
+      </button>
+      <input
+        type="button"
+        value="Close"
+        (click)="switchEditCardModal()"
+        class="m-auto px-4 py-2 bg-rose-500 text-white rounded hover:bg-rose-600"
+      />
+    </form>
+  </dialog>
 </div>
-} @else {
-<p>No card data available</p>
-}
