@@ -1,9 +1,29 @@
 import { Routes } from '@angular/router';
-import { DashboardLayout } from './components/dashboard-layout/dashboard-layout';
+import { Dashboard } from './pages/dashboard/dashboard';
+import { Home } from './pages/home/home';
+import { Kanban } from './pages/kanban/kanban';
+import { Login } from './pages/login/login';
+import { Signup } from './pages/signup/signup';
 
 export const routes: Routes = [
   {
     path: '',
-    component: DashboardLayout,
+    component: Home,
+  },
+  {
+    path: 'login',
+    component: Login,
+  },
+  {
+    path: 'signup',
+    component: Signup,
+  },
+  {
+    path: 'dashboard',
+    component: Dashboard,
+  },
+  {
+    path: 'kanban',
+    component: Kanban,
   },
 ];
