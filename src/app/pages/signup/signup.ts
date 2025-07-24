@@ -6,19 +6,20 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { SigninService } from '../../services/signin.service';
-import { PasswordValidator } from '../../shared/password-validator.directive';
+import { PasswordCheckList } from '../../components/password-check-list/password-check-list';
+import { SignupService } from '../../services/signup.service';
+import { PasswordValidator } from '../../shared/password-validator';
 
 @Component({
   selector: 'app-signin',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, PasswordCheckList],
   templateUrl: './signup.html',
   styles: ``,
 })
 export class Signup {
-  signService = inject(SigninService);
+  signupService = inject(SignupService);
   passwordValidator = new PasswordValidator();
-  signupControl = new FormGroup(
+  signupGroup = new FormGroup(
     {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [
@@ -34,9 +35,9 @@ export class Signup {
   );
 
   onSubmit() {
-    const { password, username } = this.signupControl?.value;
+    const { password, username } = this.signupGroup?.value;
     if (password && username) {
-      this.signService.signin(username, password);
+      this.signupService.signin(username, password);
     }
   }
 }

@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-dashboard',
   imports: [],
   templateUrl: './dashboard.html',
-  styles: ``
+  styles: ``,
 })
-export class Dashboard {
-
-}
+export class Dashboard {}

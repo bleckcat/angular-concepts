@@ -1,5 +1,7 @@
 <form
   class="flex flex-col gap-4 max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow"
+  [formGroup]="loginGroup"
+  (ngSubmit)="onSubmit()"
 >
   <h2 class="text-2xl font-bold mb-2 text-center">Login</h2>
   <div class="flex flex-col gap-1">
@@ -11,6 +13,8 @@
       type="text"
       class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       required
+      formControlName="username"
+      maxlength="20"
     />
   </div>
   <div class="flex flex-col gap-1">
@@ -22,8 +26,19 @@
       type="password"
       class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       required
+      formControlName="password"
     />
   </div>
+  <app-password-check-list
+    [forbiddenCapital]="
+      loginGroup.get('password')?.hasError('forbiddenCapital')
+    "
+    [forbiddenCommon]="loginGroup.get('password')?.hasError('forbiddenCommon')"
+    [forbiddenNumber]="loginGroup.get('password')?.hasError('forbiddenNumber')"
+    [forbiddenSpecial]="
+      loginGroup.get('password')?.hasError('forbiddenSpecial')
+    "
+  ></app-password-check-list>
   <button
     type="submit"
     class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
@@ -35,6 +50,7 @@
       Forgot your password?
     </a>
   </div>
+
   <div class="text-center">
     <span class="text-sm text-gray-600">Don't have an account? </span>
     <a routerLink="/signup" class="text-blue-600 hover:text-blue-700 text-sm">

@@ -1,6 +1,6 @@
 <form
   class="flex flex-col gap-4 max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow"
-  [formGroup]="signupControl"
+  [formGroup]="signupGroup"
   (ngSubmit)="onSubmit()"
 >
   <h2 class="text-2xl font-bold mb-2 text-center">Sign Up</h2>
@@ -13,11 +13,11 @@
       type="text"
       class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       required
-      [maxlength]="20"
+      maxlength="20"
       formControlName="username"
     />
-    @if(signupControl.get('username')?.hasError('required') &&
-    signupControl.get('username')?.touched) {
+    @if(signupGroup.get('username')?.hasError('required') &&
+    signupGroup.get('username')?.touched) {
     <div class="text-red-500 text-sm">Please enter your username</div>
     }
   </div>
@@ -32,85 +32,24 @@
       required
       formControlName="password"
     />
-    @if(signupControl.get('password')?.hasError('required') &&
-    signupControl.get('password')?.touched) {
+    @if(signupGroup.get('password')?.hasError('required') &&
+    signupGroup.get('password')?.touched) {
     <div class="text-red-500 text-sm">Please enter your password</div>
     }
-    <!-- To-do: Create a password validation component -->
-    <ul class="text-sm mt-1">
-      <li
-        class="flex items-center gap-2"
-        [class.text-green-600]="
-          !signupControl.get('password')?.hasError('forbiddenCapital')
-        "
-        [class.text-red-500]="
-          signupControl.get('password')?.hasError('forbiddenCapital')
-        "
-      >
-        <span>
-          {{
-            signupControl.get("password")?.hasError("forbiddenCapital")
-              ? "✗"
-              : "✓"
-          }}
-        </span>
-        At least one uppercase letter
-      </li>
-      <li
-        class="flex items-center gap-2"
-        [class.text-green-600]="
-          !signupControl.get('password')?.hasError('forbiddenCommon')
-        "
-        [class.text-red-500]="
-          signupControl.get('password')?.hasError('forbiddenCommon')
-        "
-      >
-        <span>
-          {{
-            signupControl.get("password")?.hasError("forbiddenCommon")
-              ? "✗"
-              : "✓"
-          }}
-        </span>
-        At least one lowercase letter
-      </li>
-      <li
-        class="flex items-center gap-2"
-        [class.text-green-600]="
-          !signupControl.get('password')?.hasError('forbiddenNumber')
-        "
-        [class.text-red-500]="
-          signupControl.get('password')?.hasError('forbiddenNumber')
-        "
-      >
-        <span>
-          {{
-            signupControl.get("password")?.hasError("forbiddenNumber")
-              ? "✗"
-              : "✓"
-          }}
-        </span>
-        At least one number
-      </li>
-      <li
-        class="flex items-center gap-2"
-        [class.text-green-600]="
-          !signupControl.get('password')?.hasError('forbiddenSpecial')
-        "
-        [class.text-red-500]="
-          signupControl.get('password')?.hasError('forbiddenSpecial')
-        "
-      >
-        <span>
-          {{
-            signupControl.get("password")?.hasError("forbiddenSpecial")
-              ? "✗"
-              : "✓"
-          }}
-        </span>
-        At least one special character
-      </li>
-    </ul>
+    <app-password-check-list
+      [forbiddenCapital]="
+        signupGroup.get('password')?.hasError('forbiddenCapital')
+      "
+      [forbiddenCommon]="
+        signupGroup.get('password')?.hasError('forbiddenCommon')
+      "
+      [forbiddenNumber]="
+        signupGroup.get('password')?.hasError('forbiddenNumber')
+      "
+      [forbiddenSpecial]="
+        signupGroup.get('password')?.hasError('forbiddenSpecial')
+      "
+    ></app-password-check-list>
   </div>
   <div class="flex flex-col gap-1">
     <label for="confirm-password-input">
@@ -123,17 +62,17 @@
       required
       formControlName="confirmPassword"
     />
-    @if(signupControl.get('confirmPassword')?.hasError('required') &&
-    signupControl.get('confirmPassword')?.touched) {
+    @if(signupGroup.get('confirmPassword')?.hasError('required') &&
+    signupGroup.get('confirmPassword')?.touched) {
     <div class="text-red-500 text-sm">Please re-enter your password</div>
-    } @if(signupControl.getError("passwordAreNotEqual")){
+    } @if(signupGroup.getError("passwordAreNotEqual")){
     <div class="text-red-500 text-sm">Passwords must match</div>
     }
   </div>
   <button
     type="submit"
     class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-    [disabled]="!signupControl.valid"
+    [disabled]="!signupGroup.valid"
   >
     Sign Up
   </button>
